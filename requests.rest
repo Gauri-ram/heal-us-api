@@ -1,0 +1,21 @@
+GET http://localhost:3001/user
+
+###
+
+POST http://localhost:3001/user/new
+Content-type: application/json
+
+{
+    "firstName": "Nisargay" ,
+    "lastName": "Hadid",
+    "email": "gaybois@gmail.com",
+    "usn": "1BM21CS066",
+    "gender": "male",
+    "age": 21,
+    "mobileNo": "9846327266",
+    "password": "hahahaha8383"
+}
+
+###
+
+DELETE http://localhost:3001/user/delete/648ef7d83639867faecc3f12
