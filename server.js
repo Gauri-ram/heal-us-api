@@ -39,10 +39,9 @@ const database = async () => {
   }
 };
 
-database();
 
-app.get('/',async (req, res) => {
-
+app.get('/test', (req, res) => {
+  res.status(200).send("Hello world");
 })
 
 //LOGIN ROUTE
@@ -66,7 +65,7 @@ app.post('/loggedin', async (req, res) => {
     // const expirationDate = new Date(Date.now() + 86400000);
     res.cookie("auth_token", token, {
       httpOnly: true
-    }); 
+    });
     // User found and password matched
     return res.status(200).json({ message: 'Login successful', token: token });
 
@@ -103,14 +102,14 @@ app.post('/registered', async (req, res) => {
   }
 });
 
- //TODO
- const Todo = require('./models/Todo');
+//TODO
+const Todo = require('./models/Todo');
 const Post = require('./models/Storyspace.js');
 
 app.get('/todos', async (req, res) => {
-	const todos = await Todo.find();
+  const todos = await Todo.find();
   console.log(todos);
-	res.json(todos);
+  res.json(todos);
 });
 
 // app.post('/todo/new', (req, res) => {
@@ -168,7 +167,7 @@ app.delete('/todo/delete/:id', async (req, res) => {
 });
 
 app.get('/todo/complete/:id', async (req, res) => {
-  try {  
+  try {
     const todo = await Todo.findById(req.params.id);
 
     if (!todo) {
@@ -190,11 +189,11 @@ app.get('/todo/complete/:id', async (req, res) => {
 
 
 app.put('/todo/update/:id', async (req, res) => {
-	const todo = await Todo.findById(req.params.id);
+  const todo = await Todo.findById(req.params.id);
 
-	todo.text = req.body.text;
+  todo.text = req.body.text;
 
-	todo.save();
+  todo.save();
 });
 
 app.get('/dash', verifyToken, (req, res) => {
@@ -227,9 +226,6 @@ app.post('/contact', async (req, res) => {
 });
 
 
-app.listen(3002, () =>  {
-    console.log("server is listening")
-});
 
 app.post('/storyspace', async (req, res) => {
   try {
@@ -272,3 +268,5 @@ app.get('/storyspace', async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+module.exports = { app, database };
