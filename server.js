@@ -56,7 +56,7 @@ app.post('/loggedin', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (!(bcrypt.compare(password, user.password))) {
+    if (!(await bcrypt.compare(password, user.password))) {
       // Incorrect password
       return res.status(401).json({ message: 'Incorrect password' });
     }
@@ -86,7 +86,7 @@ app.post('/registered', async (req, res) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      console.log("Hello haaid");
+      console.log("existing");
       return res.status(409).json({ error: 'Email already exists' });
     }
 
@@ -176,7 +176,7 @@ app.get('/todo/complete/:id', async (req, res) => {
     }
 
     todo.complete = !todo.complete;
-    console.log("Haaid dumb fuck");
+    console.log("Completed");
     todo.save();
 
     res.json(todo);
@@ -215,7 +215,7 @@ app.post('/contact', async (req, res) => {
     });
 
     // Save the new Contact document to the database
-    await newContact.save();
+    const savedContactus = await newContact.save();
 
     // Send a response back to the client
     return res.status(200).json({ message: 'Contact information saved successfully' });
